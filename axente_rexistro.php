@@ -9,13 +9,14 @@ if ($nomeCompleto == "")
 else
     print "<p>O valor recibido do campo nome é: $nomeCompleto</p>";
 
-
+/*********************************************************************************************/
 $nome_Usr=htmlspecialchars(trim(strip_tags($_REQUEST['nomeUsr']), ENT_QUOTES, "ISO-8859-1"));
 if ($nome_Usr == "")
     print "<p>O campo nome de usuario está baleiro. É un campo obrigatorio.</p>";
 else
     print "<p>O valor recibido o campo nome de ususario é: $nomeUsr</p>";
 
+/*********************************************************************************************/
 $contrasinal=htmlspecialchars(trim(strip_tags($_REQUEST['contrasinal'])), ENT_QUOTES, "ISO-8859-1");
 if ($contrasinal == "")
     print "<p>O campo contrasinal está baleiro. É un campo obrigatorio.</p>";
@@ -25,49 +26,94 @@ elseif (strlen($_POST['contrasinal'])<6) {
 else
     print "<p>O valor recibido do campo contrasinal é: $contrasinal</p>";
 
-
+/*********************************************************************************************/
 $idade=htmlspecialchars(trim(strip_tags($_REQUEST['idade'])), ENT_QUOTES, "ISO-8859-1");
 if ($idade == "")
     print "<p>O campo idade está baleiro.</p>";
+elseif (($_POST['idade']<0) || ($_POST['idade']>130)) {
+    print "<p>Hai que incluir un número entre 0 e 130</p>";
+}
 else
     print "<p>O valor recibido do campo idade é: $idade</p>";
 
-
+/*********************************************************************************************/
+//O campo data de nacemento deberá conter unha data no formato dd/mm/aaaa.
 $dNac=htmlspecialchars(trim(strip_tags($_REQUEST['dNac'])), ENT_QUOTES, "ISO-8859-1");
+//$fecha="**/**/****";
 if ($dNac == "")
     print "<p>O campo data de nacemento está baleiro</p>";
+//elseif (strcasecmp($_POST['dNac'],$fecha) != 0){
+   // print "<p>A data ten que estar no formato dd/mm/aaaa</p>";
+  // }
 else
     print "<p>O valor recibido do campo data de nacemento é: $dNac</p>";
 
-
+/*********************************************************************************************/
+//O campo email deberá conter un enderezo válido.
 $email=htmlspecialchars(trim(strip_tags($_REQUEST['email'])), ENT_QUOTES, "ISO-8859-1");
 if ($email == "")
     print "<p>O campo email está baleiro. É un campo obrigatorio</p>";
+elseif($_POST['email'] == '' or !preg_match("/^[a-zA-Z0-9_\.\-]+@[a-zA-Z0-9\-]+\.[a-zA-Z0-9\-\.]+$/",$_POST['email'])){
+
+        print "<p>Email introducido no válido</p>";
+}    
 else
     print "<p>O valor recibido do campo email é: $email</p>";
 
+/*
+$email = "john.doe@example.com";
 
+if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+  echo("$email is a valid email address");
+} else {
+  echo("$email is not a valid email address");
+}
+*/
+
+/*********************************************************************************************/
+//O campo URL da páxina persoal deberá conter unha URL válida.
 $url=htmlspecialchars(trim(strip_tags($_REQUEST['url'])), ENT_QUOTES, "ISO-8859-1");
+$validar_url=$_REQUEST['url'];
 if ($url == "")
     print "<p>O campo URL da páxina persoal está balerio</p>";
+elseif($_POST['url']== '' or !preg_match("/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|](\.)[a-z]{2}/i",$_POST['url'])){
+    print "<p>URL introducida incorrecta</p>";
+}
+
 else
     print "<p>O valor recibido do campo URL da páxina persoal é: $url</p>";
+    
+/*
+$url = "https://www.w3schools.com";
 
+if (filter_var($url, FILTER_VALIDATE_URL)) {
+    echo("$url is a valid URL");
+} else {
+    echo("$url is not a valid URL");
+}
+*/
 
+/*********************************************************************************************/
+//O campo IP do equipo deberá conter unha dirección IP válida.
 $ip=htmlspecialchars(trim(strip_tags($_REQUEST['ip'])), ENT_QUOTES, "ISO-8859-1");
+$ip=$_POST['ip'];
 if ($ip == "")
     print "<p>O campo IP do equipo está baleiro</p>";
-else
+elseif(filter_var($ip, FILTER_VALIDATE_IP)){
     print "<p>O valor recibido do campo IP é: $ip</p>";
 
+}
+else
+    print "<p>Formato IP incorrecto</p>";
 
+/*********************************************************************************************/
 $hobbies=htmlspecialchars(trim(strip_tags($_REQUEST['hobbies'])), ENT_QUOTES, "ISO-8859-1");
 if ($hobbies == "")
     print "<p>O campo descrición dos hobbies está baleiro</p>";
 else
     print "<p>O valor recibido do campo hobbies é: $hobbies</p>"; 
 
-
+/*********************************************************************************************/
 $rcbInfo=(isset($_REQUEST['rcbInfo']))
     ? htmlspecialchars(trim(strip_tags($_REQUEST['rcbInfo'])), ENT_QUOTES, "ISO-8859-1")
     : "";
@@ -76,8 +122,7 @@ if ($rcbInfo == "")
 else
     print "<p>O valor recibido do control recibir información é: $rcbInfo</p>";
 
-
-
+/*********************************************************************************************/
 $sexo= (isset($_REQUEST['sexos']))
     ? htmlspecialchars(trim(strip_tags($_REQUEST['sexos'])), ENT_QUOTES, "ISO-8859-1")
     : "";
@@ -86,7 +131,7 @@ if ($sexo == "")
 else
     print "<p>O valor recibido do control sexo é: $sexo</p>";
 
-
+/*********************************************************************************************/
 $linguasEs= (isset($_REQUEST['linguasEs']))
     ? $_REQUEST['linguasEs']
     : "";
@@ -97,8 +142,7 @@ else
     print_r($linguasEs);
     echo "</pre>";
 
-
-
+/*********************************************************************************************/
 $curriculo= (isset($_REQUEST['curriculo']))
     ? $_FILES['curriculo']
     : "";
