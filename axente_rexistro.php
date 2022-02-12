@@ -10,11 +10,11 @@ else
     print "<p>O valor recibido do campo nome é: $nomeCompleto</p>";
 
 /*********************************************************************************************/
-$nome_Usr=htmlspecialchars(trim(strip_tags($_REQUEST['nomeUsr']), ENT_QUOTES, "ISO-8859-1"));
+$nome_Usr=htmlspecialchars(trim(strip_tags($_REQUEST['nome_Usr']), ENT_QUOTES, "ISO-8859-1"));
 if ($nome_Usr == "")
     print "<p>O campo nome de usuario está baleiro. É un campo obrigatorio.</p>";
 else
-    print "<p>O valor recibido o campo nome de ususario é: $nomeUsr</p>";
+    print "<p>O valor recibido o campo nome de ususario é: $nome_Usr</p>";
 
 /*********************************************************************************************/
 $contrasinal=htmlspecialchars(trim(strip_tags($_REQUEST['contrasinal'])), ENT_QUOTES, "ISO-8859-1");
@@ -42,11 +42,19 @@ $dNac=htmlspecialchars(trim(strip_tags($_REQUEST['dNac'])), ENT_QUOTES, "ISO-885
 //$fecha="**/**/****";
 if ($dNac == "")
     print "<p>O campo data de nacemento está baleiro</p>";
-//elseif (strcasecmp($_POST['dNac'],$fecha) != 0){
-   // print "<p>A data ten que estar no formato dd/mm/aaaa</p>";
-  // }
-else
-    print "<p>O valor recibido do campo data de nacemento é: $dNac</p>";
+
+if ($dNac != "")
+$valores = explode('/',$dNac);
+
+if(count($valores) == 3){
+    if (checkdate($valores[1],$valores[0],$valores[2]))
+    print "<p>Formato de data correcto</p>";
+    else 
+    print "<p>Algún dos valores non é válido.</p>";
+}else {
+    print "<p>A data introducida non ten un formato válido.</p>";
+}
+
 
 /*********************************************************************************************/
 //O campo email deberá conter un enderezo válido.
